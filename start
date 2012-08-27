@@ -1,0 +1,5 @@
+#!/bin/bash
+
+BASEDIR="$(dirname "$(readlink -f "$0")")"
+export WINEPREFIX="$BASEDIR/wine"
+exec wine "C:\Program Files\WineApp\WineApp.exe"

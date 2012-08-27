@@ -1,0 +1,35 @@
+#!/bin/bash -e
+
+BASEDIR="$(dirname "$(readlink -f "$0")")"
+DESKTOP="$BASEDIR/desktop"
+if [ ! -f "$DESKTOP" ]; then
+    echo "Desktop fle is missing" >&2
+    exit 1
+fi
+
+checkout() {
+    OLD="$(sed "/^$1=/!d;s/^.*=//" "$DESKTOP")"
+    NEW="$BASEDIR/$2"
+    if [ "$OLD" = "$NEW" ]; then
+        echo "$1 is up to date"
+    else
+        sed -i "s@$OLD@$NEW@" "$DESKTOP"
+        echo "$1 has been updated"
+    fi
+}
+
+checkout Icon icon
+checkout Exec start
+
+TAGFILE="$BASEDIR/uuid"
+if [ ! -f "$TAGFILE" ]; then
+    uuidgen > "$TAGFILE"
+fi
+UUID=$(cat "$TAGFILE")
+DTARGET="$HOME/.local/share/applications/$UUID.desktop"
+if [ "$(readlink $DTARGET)" = "$DESKTOP" ]; then
+    echo "Link is up to date"
+else
+    ln -sf "$DESKTOP" "$DTARGET"
+    echo "Link has been updated"
+fi
