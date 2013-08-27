@@ -9,7 +9,10 @@ fi
 
 checkout() {
     OLD="$(sed "/^$1=/!d;s/^.*=//" "$DESKTOP")"
-    NEW="\"$BASEDIR/$2\""
+    case $1 in
+        Exec ) NEW="\"$BASEDIR/$2\"" ;;
+        Icon ) NEW="$BASEDIR/$2" ;;
+    esac
     if [ "$OLD" = "$NEW" ]; then
         echo "$1 is up to date"
     else
