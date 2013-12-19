@@ -3,7 +3,7 @@ This is a KISS sandbox for simple Wine applications.
 1. Put this directory anywhere you like
 2. Run "./winecfg" and do some basic configuration (or just press OK)
 3. Install your application somehow like this:
-   $ env WINEPREFIX="/path/to/this/directory" wine /path/to/setup.exe
+   $ env WINEPREFIX="/path/to/this/directory/wine" wine /path/to/setup.exe
    or just unpack it into "./wine/drive_c/Program Files/<Name>".
 4. Edit "./desktop" (Required: Name, Categories;
                      Optional: GenericName, Comment, MimeType)
